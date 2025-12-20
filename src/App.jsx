@@ -2,7 +2,9 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import viteLogo from '/vite.svg';
 import { Header } from './Header';
+import { Footer } from "./Footer";
 import { TodoList } from './TodoList';
+import { Card } from "./card";
 import { MyAccordion } from './MyAccordion';
 import reactLogo from './assets/react.svg';
 import { readLocalData, writeLocalData } from './db.js';
@@ -47,10 +49,14 @@ function App() {
   };
 
   return (
-    <>
-      <Header title="Welcome to My Website!" message="Thanks for visiting my site." />
+     <div className="app">
+      <Header title="Welcome to my app: TaskFlow Pro"
+        message="Thanks for visiting my app."
+      />
 
-      <main>
+      <main className="main-content">
+
+        
         <section>
           <form id="todo-form" action={handleFormSubmit}>
             <input
@@ -71,13 +77,25 @@ function App() {
           <h3>Example Usage from the Material Component Library</h3>
           <MyAccordion />
         </section>
+
+
+
+        <section className="card-section">
+          <h2>Featured Card</h2>
+          <Card 
+            title="Productivity Boost" 
+            subtitle="Daily Organization Tips" 
+            content="Stay organized and boost your productivity with our smart task management features." 
+            image="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=200&fit=crop&auto=format" 
+          />
+        </section>
+
+
       </main>
 
 
       <footer>
-        <p className="read-the-docs">
-          Click on the Vite (the build tool) and React (the frontend framework) logos to learn more
-        </p>
+         <Footer message="Contact me at contact@melxcreative.com" />
 
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -86,7 +104,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </footer>
-    </>
+    </div>
   )
 }
 

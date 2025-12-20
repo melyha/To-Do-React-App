@@ -1,12 +1,17 @@
 import './Header.css';
-
-// Add a new component for the Header
+import { Assignment, CheckCircle } from '@mui/icons-material';
+// Header component that displays title and message
 export function Header(props) {
     // props is some JSON that looks like {title: str, message: str}
     return (<>
         <header>
+            <div className="header-content">
+                <CheckCircle className="header-icon" />
+                <div>
             <h1>{props.title}</h1>
             <p>{props.message}</p>
+            </div>
+            </div>
         </header>
     </>);
 }
