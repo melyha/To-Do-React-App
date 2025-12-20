@@ -23,14 +23,21 @@ function App() {
 
 
   // Set up add new TODO form handler
-  const handleFormSubmit = (formData) => {
-    const titleField = formData.get('title');
-    console.log(`Handling new TODO: ${titleField}`);
+  const handleFormSubmit = (event) => {
+  event.preventDefault();
+   
+  const formData = new FormData(event.target);
+  const titleField = formData.get('title');
+  console.log(`Handling new TODO: ${titleField}`);
+
+  if (!titleField.trim()) return;
 
     // Make new TODO model
-    const newTodo = {
-      name: titleField
-    };
+     const newTodo = {
+    id: Date.now(),
+    text: titleField.trim(),
+    completed: false
+  };
 
     // We need to make a new list, otherwise React will not update
 
@@ -42,10 +49,14 @@ function App() {
     // newTodos.push(newTodo);
 
     // Option 2: Use a splat / explode operator to make a new list with the new value
-    const newTodos = [...todos, newTodo];
+      // Use spread operator to make new list
+  const newTodos = [...todos, newTodo];
 
     // We call the React hook to update the application state
     setTodos(newTodos);
+
+      // Clear the form
+  event.target.reset();
   };
 
   return (
@@ -58,7 +69,7 @@ function App() {
 
         
         <section>
-          <form id="todo-form" action={handleFormSubmit}>
+          <form id="todo-form" onSubmit={handleFormSubmit}>
             <input
               className="todo-form__input"
               id="todo-input"
