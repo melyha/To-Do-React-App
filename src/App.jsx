@@ -59,6 +59,19 @@ function App() {
   event.target.reset();
   };
 
+  //Add toggle todo functionality
+  const handleToggleCompleted = (id) => {
+  setTodos(
+    todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      } else {
+        return todo;
+      }
+    })
+  );
+};
+
   return (
      <div className="app">
       <Header title="Welcome to my app: TaskFlow Pro"
@@ -83,7 +96,8 @@ function App() {
           </form>
         </section>
 
-        <TodoList todos={todos} />
+
+        <TodoList todos={todos} onToggle={handleToggleCompleted} />
         <section>
           <h3>Example Usage from the Material Component Library</h3>
           <MyAccordion />
