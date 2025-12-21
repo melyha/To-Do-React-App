@@ -19,6 +19,7 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
         "Learn new React concepts",
         "Organize digital photos"
     ];
+    
 
 export function getAllTodos(setterCallback) {
     fetch(`${BASE_URL}/todos?_limit=10`)
