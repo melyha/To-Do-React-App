@@ -8,23 +8,36 @@ import { Card } from "./card";
 import { MyAccordion } from "./MyAccordion";
 import reactLogo from "./assets/react.svg";
 import { readLocalData, writeLocalData } from "./db.js";
-import { getAllTodos } from './api.js';
 
 function App() {
-  // Define the TODO models, we also give it the default / starting value
-  const [todos, setTodos] = useState(readLocalData("rememberedTodos") || []);
+  // Define the TODO models with proper initialization
+  const [todos, setTodos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // todos is going to be an empty list []
-  // If I want to change todos, I need to use the setTodos() callback function
-
-  // Any time todos change, I want to persist to the DB (localStorage)
+  // Load data on component mount
   useEffect(() => {
-    // Load from API on first mount
-    getAllTodos((apiTodos) => {
+    // Try to load from localStorage first
+    const savedTodos = readLocalData("rememberedTodos");
+    
+    if (savedTodos && savedTodos.length > 0) {
+      setTodos(savedTodos);
+      setIsLoading(false);
+    } else {
+      // Load from API if no local data
+      getAllTodos((apiTodos) => {
         console.log('Loaded todos from API:', apiTodos);
         setTodos(apiTodos);
-    });
-}, []);
+        setIsLoading(false);
+      });
+    }
+  }, []);
+
+  // Save to localStorage whenever todos change
+  useEffect(() => {
+    if (!isLoading && todos.length > 0) {
+      writeLocalData("rememberedTodos", todos);
+    }
+  }, [todos, isLoading]);
 
   // Set up add new TODO form handler
   const handleFormSubmit = (event) => {
@@ -42,20 +55,9 @@ function App() {
       text: titleField.trim(),
       completed: false,
     };
-
     // We need to make a new list, otherwise React will not update
-
-    // Option 1: Make a new list, iterate over old values, push on new value
-    // const newTodos = [];
-    // for (let i = 0; i < todos.length; i++) {
-    //   newTodos.push(todos[i]);
-    // }
-    // newTodos.push(newTodo);
-
-    // Option 2:
     // Use spread operator to make new list
     const newTodos = [...todos, newTodo];
-
     // We call the React hook to update the application state
     setTodos(newTodos);
 
