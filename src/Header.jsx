@@ -6,7 +6,7 @@ export function Header(props) {
     return (<>
         <header>
             <div className="header-content">
-                <CheckCircle className="header-icon" />
+                
                 <div>
             <h1>{props.title}</h1>
             <p>{props.message}</p>
