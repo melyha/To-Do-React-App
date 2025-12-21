@@ -3,7 +3,7 @@ import { CheckCircle, RadioButtonUnchecked, Delete } from "@mui/icons-material";
 
 // TodoList component that displays a list of todos
 export function TodoList(props) {
-  const { todos, onToggle } = props;
+  const { todos, onToggle, onDelete, onRemoveCompleted } = props;
 
   return (
     <div className="todo-list-container">
@@ -23,10 +23,11 @@ export function TodoList(props) {
             <span className={`todo-text ${todo.completed ? "completed" : ""}`}>
               {todo.text}
             </span>
+            
           </li>
         ))}
       </ul>
-      <button className="remove-completed-btn">
+      <button className="remove-completed-btn" onClick={onRemoveCompleted}>
         <Delete className="btn-icon" />
         Remove Completed Items
       </button>
