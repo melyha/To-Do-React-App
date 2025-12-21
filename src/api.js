@@ -1,15 +1,34 @@
 //JSONPlaceholder- Fake API for Testing - AI genearted
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
+// Real todo content to replace Lorem Ipsum
+    const realTodos = [
+        "Complete React assignment",
+        "Study for final exams", 
+        "Buy groceries for the week",
+        "Go to the gym",
+        "Call mom and dad",
+        "Clean the apartment",
+        "Finish reading current book",
+        "Plan weekend trip",
+        "Update resume",
+        "Practice coding interview questions",
+        "Do laundry",
+        "Pay monthly bills",
+        "Schedule dentist appointment",
+        "Learn new React concepts",
+        "Organize digital photos"
+    ];
+
 export function getAllTodos(setterCallback) {
     fetch(`${BASE_URL}/todos?_limit=10`)
     .then(resp => resp.json())
     .then(data => {
-        // Transform API data to match our structure
-        const transformedTodos = data.map(todo => ({
+        // Transform API data with real content
+        const transformedTodos = data.map((todo, index) => ({
             id: todo.id,
-            text: todo.title,
-            completed: todo.completed
+            text:  realTodos[index] || `Task ${index + 1}`, // Use real content
+            completed: false
         }));
         setterCallback(transformedTodos);
     })
