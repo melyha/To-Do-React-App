@@ -8,6 +8,7 @@ import { Card } from "./card";
 import { MyAccordion } from "./MyAccordion";
 import reactLogo from "./assets/react.svg";
 import { readLocalData, writeLocalData } from "./db.js";
+import { getAllTodos } from './api.js';
 
 function App() {
   // Define the TODO models, we also give it the default / starting value
@@ -18,8 +19,12 @@ function App() {
 
   // Any time todos change, I want to persist to the DB (localStorage)
   useEffect(() => {
-    writeLocalData("rememberedTodos", todos);
-  }, [todos]);
+    // Load from API on first mount
+    getAllTodos((apiTodos) => {
+        console.log('Loaded todos from API:', apiTodos);
+        setTodos(apiTodos);
+    });
+}, []);
 
   // Set up add new TODO form handler
   const handleFormSubmit = (event) => {
